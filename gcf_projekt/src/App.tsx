@@ -1,12 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Tab, Tabs } from 'react-bootstrap';
 import { ProjektModel } from './Helper/Models';
 import { FetchProjects } from './Helper/Utility';
-import FluentUIList from './Components/FluentUIList';
 import BootstrapList from './Components/BootstrapList';
 import DemoData from './Helper/DemoData.json';
+
 export interface IAppProps { }
 
 export default class App extends React.Component<IAppProps, { Projekts: ProjektModel[] }> {
@@ -24,7 +22,10 @@ export default class App extends React.Component<IAppProps, { Projekts: ProjektM
   public render(): React.ReactNode {
     return (
       <div className="App">
-        <Tabs
+        <h1>Projects</h1>
+        <BootstrapList Projects={this.state.Projekts} />
+
+        {/* <Tabs
           style={{ placeContent: "center", marginTop: "10px" }}
           defaultActiveKey="profile"
           id="uncontrolled-tab-example"
@@ -36,7 +37,7 @@ export default class App extends React.Component<IAppProps, { Projekts: ProjektM
           <Tab eventKey="Bootstrap" title="Bootstrap">
             <BootstrapList Projects={this.state.Projekts} />
           </Tab>
-        </Tabs>
+        </Tabs> */}
       </div>
     );
   }
@@ -44,11 +45,9 @@ export default class App extends React.Component<IAppProps, { Projekts: ProjektM
   private async GetProjects() {
     try {
       const prjs = await FetchProjects();
-      console.log({ prjs });
       this.setState({ Projekts: prjs });
     } catch (e) {
       console.log({ e });
-      console.log({ DemoData });
       this.setState({ Projekts: DemoData as any });
     }
   }

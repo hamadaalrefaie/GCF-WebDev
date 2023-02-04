@@ -10,10 +10,9 @@ export async function FetchProjects () {
 
     const res = await fetch("https://api.gcfund.org/v1/projects", {
         method: "Get",
-        mode: "cors",
         redirect :"follow",
         headers: reqHeaders
-        
+
     });
 
     if(res.ok) {
@@ -23,3 +22,7 @@ export async function FetchProjects () {
 
     return [];
 }
+
+export interface hasHTable {
+    [key: string]: any; // 👈️ variable key
+};
