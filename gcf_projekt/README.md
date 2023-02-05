@@ -14,6 +14,9 @@ This applications will display all the projects in table format and each row (Po
 This application can give the ability to search or filter by clicking on the columns headers and another row will pop:
 
 ![Search pic](./Extras/Search.png "MarineGEO logo")
+
+
+### *Fetching from https://api.gcfund.org/v1/projects because of Cors issue, so i have create demo data Json file: "``./src/Helper/DemoData.json``"*
 ## Available Scripts
 
 In the project directory, you can run:
