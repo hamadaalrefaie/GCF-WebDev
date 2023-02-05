@@ -16,7 +16,9 @@ This application can give the ability to search or filter by clicking on the col
 ![Search pic](./Extras/Search.png "MarineGEO logo")
 
 
-**Fetching from https://api.gcfund.org/v1/projects is not working due to Cors issue, so i have create demo data Json file: "``./src/Helper/DemoData.json``"**
+~~**Fetching from https://api.gcfund.org/v1/projects is not working due to Cors issue, so i have create demo data Json file: "``./src/Helper/DemoData.json``"**~~
+
+**Fetching from https://api.gcfund.org/v1/projects is now working, so i have fixed cors issue"**
 ## Available Scripts
 
 In the project directory, you can run:
