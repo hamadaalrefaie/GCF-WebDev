@@ -148,7 +148,9 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
             </div>;
           }}
         />
-        <p>Thus can my love excuse the slow offence Of my dull bearer when from thee I speed: From where thou art why should I haste me thence? Till I return, of posting is no need. </p>
+        <p>This table is displaying all projects in pages, every page has 50 projects. You can search/filter projects by clicking on columns head eg.(ProjectID) and search row will pop.
+          on actions column, there are two buttons: 1. to show project detail 2. to expand project and show all project extensions.
+        </p>
         {this.props.Projects &&
           <Table size="lg" style={{ maxWidth: "90%", margin: "auto" }}>
             <thead>

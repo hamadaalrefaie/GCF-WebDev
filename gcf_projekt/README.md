@@ -1,7 +1,19 @@
-# Getting Started with Create React App
+# GCF-WebDev
+# Getting Started with GCF-WebDev
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Clone the project from Github and then navigate to "~/GCF/GCF-WebDev/gcf_projekt" and run **`npm i`**
+
+
+## Projects GCF
+This applications will display all the projects in table format and each row (Porject) has an extension will allow user to expand the project se its detail
+
+![display extensions](./Extras/displayExt.png "MarineGEO logo")
+
+This application can give the ability to search or filter by clicking on the columns headers and another row will pop:
+
+![Search pic](./Extras/search.png "MarineGEO logo")
 ## Available Scripts
 
 In the project directory, you can run:
