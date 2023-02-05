@@ -46,9 +46,9 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
   public componentDidMount(): void {
     if (this.props.Projects && this.props.Projects.length === 0) setTimeout(() => { this.componentDidMount(); }, 500);
     this.setState({ Projects: this.props.Projects });
-
     setTimeout(() => { this.getPageNum(); }, 100);
   }
+
   public componentWillUpdate(nextProps: IBootstrapListProps, nextState: IBootstrapListState): void {
     if (this.state.searchedPrjNum["value"] !== nextState.searchedPrjNum["value"]) {
       setTimeout(() => { this.Filter(true); }, 100);
@@ -59,7 +59,6 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
     if (this.state.searchedPrjNum["value"] !== prevState.searchedPrjNum["value"]) {
       setTimeout(() => { this.getPageNum(); }, 100);
     }
-
   }
 
   public render(): React.ReactElement<IBootstrapListProps> {
@@ -67,7 +66,9 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
       <div>
         <ModalCustom
           showModal={this.state.hideProjectDetail}
+          onDissmis={(show) => this.setState({ hideProjectDetail: show })}
           Title={`${this.state.SelectedProj.ProjectsID}'s detail`}
+          key={Math.random()}
           body={() => {
             return <div>
               <p>
@@ -79,35 +80,35 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                 <span className={styles.subTitle}>{this.state.SelectedProj.ProjectName}</span>
               </p>
               <p>
-                <span className={styles.title}>Project ApprovedRef:</span>
-                <span className={styles.subTitle}>{this.state.SelectedProj.ApprovedRef}</span>
+                <span className={styles.title}>Project Sector:</span>
+                <span className={styles.subTitle}>{this.state.SelectedProj.Sector}</span>
               </p>
               <a hidden={this.state.showMore} href='#' onClick={() => this.setState({ showMore: !this.state.showMore })}>Show more..</a>
               <Collapse in={this.state.showMore}>
                 <div>
                   <p>
                     <span className={styles.title}>Project ApprovalDate:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.ApprovalDate?.toString()}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.ApprovalDate && new Date(this.state.SelectedProj.ApprovalDate).toLocaleDateString()}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project BoardMeeting:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.BoardMeeting}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.BoardMeeting}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project DurationMonths:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.DurationMonths}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.DurationMonths}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project EndDate:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.EndDate?.toString()}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.EndDate && new Date(this.state.SelectedProj.EndDate).toLocaleDateString()}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project IndirectBeneficiaries:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.IndirectBeneficiaries}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.IndirectBeneficiaries}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project LifeTimeCO2:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.LifeTimeCO2}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.LifeTimeCO2}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project ProjectURL:</span>
@@ -118,12 +119,12 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                     <span className={styles.subTitle}>{this.state.SelectedProj.RiskCategory}</span>
                   </p>
                   <p>
-                    <span className={styles.title}>Project Sector:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.Sector}</span>
+                    <span className={styles.title}>Project ApprovedRef:</span>
+                    <span className={styles.subTitle}>{this.state.SelectedProj.ApprovedRef}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project StartDate:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.StartDate?.toString()}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.StartDate && new Date(this.state.SelectedProj.StartDate).toLocaleDateString()}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project Theme:</span>
@@ -135,11 +136,11 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                   </p>
                   <p>
                     <span className={styles.title}>Project TotalGCFFunding:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.TotalGCFFunding}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.TotalGCFFunding}</span>
                   </p>
                   <p>
                     <span className={styles.title}>Project TotalValue:</span>
-                    <span className={styles.subTitle}>{this.state.SelectedProj.TotalValue}</span>
+                    <span className={styles.subTitle}> {this.state.SelectedProj.TotalValue}</span>
                   </p>
                   <a href='#' onClick={() => this.setState({ showMore: !this.state.showMore })}>Show less..</a>
                 </div>
@@ -149,9 +150,9 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
         />
         <p>Thus can my love excuse the slow offence Of my dull bearer when from thee I speed: From where thou art why should I haste me thence? Till I return, of posting is no need. </p>
         {this.props.Projects &&
-          <Table key={"ffffff"} size="lg" style={{ maxWidth: "90%", margin: "auto" }}>
+          <Table size="lg" style={{ maxWidth: "90%", margin: "auto" }}>
             <thead>
-              <tr key={"f"}>
+              <tr>
                 <th key={"ProjectsID"}>
                   <Button style={{ fontWeight: 500, width: "100%", background: "#f5f9f5" }} variant="light" onClick={() => this.setState({ showProjectSearc: !this.state.showProjectSearc })}>ProjectsID <VscFilter /></Button>
                 </th>
@@ -161,12 +162,12 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                 <th key={"Sector"}><Button style={{ fontWeight: 500, width: "100%", background: "#f5f9f5" }} variant="light" onClick={() => this.setState({ showProjectSearc: !this.state.showProjectSearc })}>Sector <VscFilter /></Button></th>
                 <th key={"TotalValue"}><Button style={{ fontWeight: 500, width: "100%", background: "#f5f9f5" }} variant="light" onClick={() => this.setState({ showProjectSearc: !this.state.showProjectSearc })}>TotalValue <VscFilter /></Button>
                 </th>
-                <th>Actions</th>
+                <th key={"Actions"}>Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr hidden={!this.state.showProjectSearc}>
-                <td><Form.Control
+                <td key={"Search by ID"}><Form.Control
                   placeholder="Search by ID"
                   aria-label="Search by ID"
                   onChange={(e) => {
@@ -177,7 +178,7 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                     }, 100);
                   }}
                 /></td>
-                <td><Form.Control
+                <td key={"Search by Name"}><Form.Control
                   placeholder="Search by Project Name"
                   aria-label="Search by Project Name"
                   onChange={(e) => {
@@ -185,11 +186,10 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                     setTimeout(() => {
                       this.Filter(true);
                       this.getPageNum();
-
                     }, 100);
                   }}
                 /></td>
-                <td><DropdownButton id="dropdown-basic-button" title={this.state.searchedPrjNum["key"] === "Sector" ? this.state.searchedPrjNum.value : "Sector"}>
+                <td key={"Search by Sector"}><DropdownButton id="dropdown-basic-button" title={this.state.searchedPrjNum["key"] === "Sector" ? this.state.searchedPrjNum.value : "Sector"}>
                   <Dropdown.Item href="#/action-2" onClick={() => {
                     this.setState({ searchedPrjNum: { value: "Public", key: "Sector" } });
                     this.Filter(true);
@@ -205,32 +205,32 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                     }, 100);
                   }}>Private</Dropdown.Item>
                 </DropdownButton></td>
-                <td><Form.Control
+                <td key={"Search by TotalValue"}><Form.Control
                   placeholder="Search by TotalValue"
                   aria-label="Search by TotalValue"
                   onChange={(e) => {
                     this.setState({ searchedPrjNum: { value: e.target.value, key: "TotalValue" } });
-                    this.Filter(true);
                     setTimeout(() => {
+                      this.Filter(true);
                       this.getPageNum();
                     }, 100);
                   }}
                 /></td>
-                <td></td>
+                <td key={"#"}></td>
               </tr>
               {this.state.Projects.slice(this.state.pageNum === 50 ? 0 : this.state.pageNum, (this.state.pageNum + 50)).map((f, ix) =>
-                <>
-                  <tr key={ix} className={styles.Row} style={{ cursor: "pointer", boxShadow: "#00000017 2px 4px 4px 0px" }} >
-                    <td key={"PrjID" + ix.toString()} style={{ width: "10%" }}>{f.ProjectsID}</td>
+                <React.Fragment key={ix}>
+                  <tr key={Math.random()} className={styles.Row} style={{ cursor: "pointer", boxShadow: "#00000017 2px 4px 4px 0px" }} >
+                    <td style={{ width: "10%" }}>{f.ProjectsID}</td>
 
-                    <td key={"Prj" + ix.toString()} style={{ width: "45%" }}>{f.ProjectName}</td>
+                    <td style={{ width: "45%" }}>{f.ProjectName}</td>
 
-                    <td key={"Sec" + ix.toString()}>{f.Sector}</td>
+                    <td>{f.Sector}</td>
 
-                    <td key={"Tot" + ix.toString()}>{f.TotalValue.toLocaleString("en-us", { style: "currency", currency: "USD" })}</td>
+                    <td>{f.TotalValue.toLocaleString("en-us", { style: "currency", currency: "USD" })}</td>
 
                     <td style={{ maxWidth: "10%" }}>
-                      <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">See details!</Tooltip>}>
+                      <OverlayTrigger key={Math.random()} overlay={<Tooltip id="tooltip-disabled">See details!</Tooltip>}>
                         <Button className={styles.seeMoreBtn} variant='light'
                           onClick={() => {
                             this.setState({ SelectedProj: f, hideProjectDetail: !this.state.hideProjectDetail });
@@ -238,45 +238,14 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                           }}
                         ><ImEyePlus /></Button>
                       </OverlayTrigger>
-                      <OverlayTrigger overlay={<Tooltip id="tooltip-disabledExpand">Expand project externsions!</Tooltip>}>
+                      <OverlayTrigger key={Math.random()} overlay={<Tooltip id="tooltip-disabledExpand">Expand project externsions!</Tooltip>}>
                         <Button className={styles.seeMoreBtnExpand} variant='dark' onClick={() => this.ToggleHiddenTabs(f.ProjectsID.toString())}>{!this.state.hideTabs[f.ProjectsID] ? <AiOutlinePlus /> : <AiOutlineMinus />}</Button>
                       </OverlayTrigger>
                     </td>
                   </tr>
-                  <tr key={f.ProjectsID.toString() + ix}>
-                    <td key={"fffffff"} colSpan={5} style={{ background: "#99ca971a" }}>
-                      <Tabs
-                        style={{ placeContent: "center", marginTop: "4px", fontWeight: 500 }}
-                        hidden={!this.state.hideTabs[f.ProjectsID]}
-                        defaultActiveKey="Countries"
-                        id="##uncontrolled-tab-example"
-                        className="mb-3"
-                        fill
-                      >
-                        <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="Countries"
-                          title={<div>Countries ({f.Countries.length})</div>}>
-                          <GetContries Country={f.Countries} />
-                        </Tab>
-                        <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="Disbursements"
-                          title={<div>Disbursements ({f.Disbursements && f.Disbursements.length})</div>}>
-                          <GetDisbursements Disbursement={f.Disbursements} />
-                        </Tab>
-                        <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="Entities"
-                          title={<div>Entities ({f.Entities.length})</div>}>
-                          <GetEntities Entity={f.Entities} />
-                        </Tab>
-                        <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="contact"
-                          title={<div>Funding ({f.Funding.length})</div>}>
-                          <GetFunding Funding={f.Funding} />
-                        </Tab>
-                        <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="eye"
-                          title={<div>ResultAreas ({f.ResultAreas.length})</div>}>
-                          <GetResultAreas ResultAreas={f.ResultAreas} />
-                        </Tab>
-                      </Tabs>
-                    </td>
-                  </tr>
-                </>
+
+                  {this.renderTabs(f)}
+                </React.Fragment>
               )}
             </tbody>
           </Table>
@@ -285,14 +254,54 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
         <Pagination style={{ justifyContent: "center", margin: "10px" }}>
           <Pagination.Prev />
           {this.state.pageNumbers.map((num, ix) =>
-            <Pagination.Item active={(this.state.currentNum) === ix} onClick={() => {
+            <Pagination.Item key={ix} active={(this.state.currentNum) === ix} onClick={() => {
               this.setState({ pageNum: this.state.pageNumbers[ix === 0 ? ix : ix - 1], currentNum: ix });
             }}>{ix + 1}</Pagination.Item>
           )}
           <Pagination.Next />
         </Pagination>
-      </div>
+      </div >
     );
+  }
+
+  private renderTabs(f: ProjektModel) {
+    if (this.state.hideTabs[f.ProjectsID]) {
+      return <tr key={Math.random()}>
+        <td colSpan={5} style={{ background: "#99ca971a" }}>
+          <Tabs
+            style={{ placeContent: "center", marginTop: "4px", fontWeight: 500 }}
+            hidden={!this.state.hideTabs[f.ProjectsID]}
+            defaultActiveKey="Countries"
+            // id="##uncontrolled-tab-example"
+            className="mb-3"
+            fill
+            key={Math.random()}
+          >
+            <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="Countries"
+              title={<span>Countries ({f.Countries.length})</span>}>
+              <GetContries Country={f.Countries} />
+            </Tab>
+            <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="Disbursements"
+              title={<span>Disbursements ({f.Disbursements && f.Disbursements.length})</span>}>
+              <GetDisbursements Disbursement={f.Disbursements} />
+            </Tab>
+            <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="Entities"
+              title={<span>Entities ({f.Entities.length})</span>}>
+              <GetEntities Entity={f.Entities} />
+            </Tab>
+            <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="contact"
+              title={<span>Funding ({f.Funding.length})</span>}>
+              <GetFunding Funding={f.Funding} />
+            </Tab>
+            <Tab hidden={!this.state.hideTabs[f.ProjectsID]} eventKey="eye"
+              title={<span>ResultAreas ({f.ResultAreas.length})</span>}>
+              <GetResultAreas ResultAreas={f.ResultAreas} />
+            </Tab>
+          </Tabs>
+        </td>
+      </tr>;
+    }
+    return null;
   }
 
   private Filter(triggerPageNum = false) {
@@ -311,6 +320,7 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
   }
 
   private ToggleHiddenTabs = (key: string) => {
+    this.setState({ hideTabs: {} });
     // eslint-disable-next-line react/no-direct-mutation-state
     this.state.hideTabs[key] = !this.state.hideTabs[key];
     this.setState({ hideTabs: this.state.hideTabs });

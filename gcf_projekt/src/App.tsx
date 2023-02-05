@@ -44,8 +44,9 @@ export default class App extends React.Component<IAppProps, { Projekts: ProjektM
 
   private async GetProjects() {
     try {
-      const prjs = await FetchProjects();
-      this.setState({ Projekts: prjs });
+      // const prjs = await FetchProjects();
+      // this.setState({ Projekts: prjs });
+      this.setState({ Projekts: DemoData as any });
     } catch (e) {
       console.log({ e });
       this.setState({ Projekts: DemoData as any });
