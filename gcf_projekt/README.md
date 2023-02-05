@@ -13,7 +13,7 @@ This applications will display all the projects in table format and each row (Po
 
 This application can give the ability to search or filter by clicking on the columns headers and another row will pop:
 
-![Search pic](./Extras/search.png "MarineGEO logo")
+![Search pic](./Extras/Search.png "MarineGEO logo")
 ## Available Scripts
 
 In the project directory, you can run:
