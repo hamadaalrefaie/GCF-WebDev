@@ -24,29 +24,14 @@ export default class App extends React.Component<IAppProps, { Projekts: ProjektM
       <div className="App">
         <h1>Projects</h1>
         <BootstrapList Projects={this.state.Projekts} />
-
-        {/* <Tabs
-          style={{ placeContent: "center", marginTop: "10px" }}
-          defaultActiveKey="profile"
-          id="uncontrolled-tab-example"
-          className="mb-3"
-        >
-          <Tab eventKey="fluentUi" title="Fluent Ui">
-            <FluentUIList Projects={this.state.Projekts} />
-          </Tab>
-          <Tab eventKey="Bootstrap" title="Bootstrap">
-            <BootstrapList Projects={this.state.Projekts} />
-          </Tab>
-        </Tabs> */}
       </div>
     );
   }
 
   private async GetProjects() {
     try {
-      // const prjs = await FetchProjects();
-      // this.setState({ Projekts: prjs });
-      this.setState({ Projekts: DemoData as any });
+      const prjs = await FetchProjects();
+      this.setState({ Projekts: prjs });
     } catch (e) {
       console.log({ e });
       this.setState({ Projekts: DemoData as any });

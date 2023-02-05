@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from 'react';
-import { Button, Collapse, Dropdown, DropdownButton, Form, OverlayTrigger, Pagination, Tab, Table, Tabs, Tooltip } from 'react-bootstrap';
+import { Button, Collapse, Dropdown, DropdownButton, Form, OverlayTrigger, Pagination, Spinner, Tab, Table, Tabs, Tooltip } from 'react-bootstrap';
 import { ProjektModel } from '../Helper/Models';
 import styles from './BootstrapList.module.css';
 import { GetContries, GetDisbursements, GetEntities, GetFunding, GetResultAreas, ModalCustom } from './MiniComponents';
 import { ImEyePlus } from 'react-icons/im';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { VscFilter } from 'react-icons/vsc'
+import { VscFilter } from 'react-icons/vsc';
+import { MdOutlineClear } from 'react-icons/md';
 import { hasHTable } from '../Helper/Utility';
 
 export interface IBootstrapListProps { Projects: ProjektModel[] }
@@ -62,15 +63,15 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
   }
 
   public render(): React.ReactElement<IBootstrapListProps> {
-    return (
-      <div>
-        <ModalCustom
-          showModal={this.state.hideProjectDetail}
-          onDissmis={(show) => this.setState({ hideProjectDetail: show })}
-          Title={`${this.state.SelectedProj.ProjectsID}'s detail`}
-          key={Math.random()}
-          body={() => {
-            return <div>
+    if (this.props.Projects.length > 0) {
+      return (
+        <div>
+          <ModalCustom
+            showModal={this.state.hideProjectDetail}
+            onDissmis={(show) => this.setState({ hideProjectDetail: show })}
+            Title={`${this.state.SelectedProj.ProjectsID}'s detail`}
+            key={Math.random()}
+            body={<div>
               <p>
                 <span className={styles.title}>Project Id:</span>
                 <span className={styles.subTitle}>{this.state.SelectedProj.ProjectsID}</span>
@@ -145,13 +146,11 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                   <a href='#' onClick={() => this.setState({ showMore: !this.state.showMore })}>Show less..</a>
                 </div>
               </Collapse>
-            </div>;
-          }}
-        />
-        <p>This table is displaying all projects in pages, every page has 50 projects. You can search/filter projects by clicking on columns head eg.(ProjectID) and search row will pop.
-          on actions column, there are two buttons: 1. to show project detail 2. to expand project and show all project extensions.
-        </p>
-        {this.props.Projects &&
+            </div>}
+          />
+          <p>This table is displaying all projects in pages, every page has 50 projects. You can search/filter projects by clicking on columns head eg.(ProjectID) and search row will pop.
+            on actions column, there are two buttons: 1. to show project detail 2. to expand project and show all project extensions.
+          </p>
           <Table size="lg" style={{ maxWidth: "90%", margin: "auto" }}>
             <thead>
               <tr>
@@ -191,7 +190,15 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
                     }, 100);
                   }}
                 /></td>
-                <td key={"Search by Sector"}><DropdownButton id="dropdown-basic-button" title={this.state.searchedPrjNum["key"] === "Sector" ? this.state.searchedPrjNum.value : "Sector"}>
+                <td key={"Search by Sector"}><DropdownButton id="dropdown-basic-button"
+                  title={this.state.searchedPrjNum["key"] === "Sector" ? this.state.searchedPrjNum.value || "Clear" : "Sector"}>
+                  <Dropdown.Item href="#/action-3" onClick={() => {
+                    this.setState({ searchedPrjNum: { value: "", key: "Sector" } });
+                    this.Filter(true);
+                    setTimeout(() => {
+                      this.getPageNum();
+                    }, 100);
+                  }}>Clear <MdOutlineClear /></Dropdown.Item>
                   <Dropdown.Item href="#/action-2" onClick={() => {
                     this.setState({ searchedPrjNum: { value: "Public", key: "Sector" } });
                     this.Filter(true);
@@ -251,18 +258,26 @@ export default class BootstrapList extends React.Component<IBootstrapListProps, 
               )}
             </tbody>
           </Table>
-        }
-        <span style={{ color: "grey" }}>{this.state.Projects.length} Projects</span>
-        <Pagination style={{ justifyContent: "center", margin: "10px" }}>
-          <Pagination.Prev />
-          {this.state.pageNumbers.map((num, ix) =>
-            <Pagination.Item key={ix} active={(this.state.currentNum) === ix} onClick={() => {
-              this.setState({ pageNum: this.state.pageNumbers[ix === 0 ? ix : ix - 1], currentNum: ix });
-            }}>{ix + 1}</Pagination.Item>
-          )}
-          <Pagination.Next />
-        </Pagination>
-      </div >
+          <span style={{ color: "grey" }}>{this.state.Projects.length} Projects</span>
+          <Pagination style={{ justifyContent: "center", margin: "10px" }}>
+            <Pagination.Prev />
+            {this.state.pageNumbers.map((num, ix) =>
+              <Pagination.Item key={ix} active={(this.state.currentNum) === ix} onClick={() => {
+                this.setState({ pageNum: this.state.pageNumbers[ix === 0 ? ix : ix - 1], currentNum: ix });
+              }}>{ix + 1}</Pagination.Item>
+            )}
+            <Pagination.Next />
+          </Pagination>
+        </div >
+      );
+    }
+    return (
+      <div>
+        <p>This table is displaying all projects in pages, every page has 50 projects. You can search/filter projects by clicking on columns head eg.(ProjectID) and search row will pop.
+          on actions column, there are two buttons: 1. to show project detail 2. to expand project and show all project extensions.
+        </p>
+        <Spinner animation="grow" />;
+      </div>
     );
   }
 

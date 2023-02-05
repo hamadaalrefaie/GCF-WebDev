@@ -9,10 +9,10 @@ import { hasHTable } from "../Helper/Utility";
 export function GetContries(porps: { Country: Country[] }) {
     const [showFinance, toggleFinance] = useState({} as hasHTable);
     const localHashCurrentExchange: hasHTable = {};
-    return <Table size="lg" style={{ maxWidth: "80%", margin: "auto" }}>
+    return <Table size="lg" style={{ maxWidth: "90%", margin: "auto" }}>
         <thead>
             <tr style={{ background: "#add8e640" }}>
-                <th style={{ fontWeight: 500 }}>CountryID</th>
+                <th style={{ fontWeight: 500 }}>Country's ID</th>
                 <th style={{ fontWeight: 500 }}>CountryName</th>
                 <th style={{ fontWeight: 500 }}>ISO3</th>
                 <th style={{ fontWeight: 500 }}>LDCs</th>
@@ -22,9 +22,9 @@ export function GetContries(porps: { Country: Country[] }) {
             </tr>
         </thead>
         <tbody>
-            {porps.Country.map(ctry =>
+            {porps.Country.map((ctry, ix) =>
                 <React.Fragment key={Math.random() + ctry.CountryID}>
-                    <tr key={ctry.CountryID + "#"}>
+                    <tr key={ix}>
                         <td>
                             {ctry.CountryID}
                         </td>
@@ -52,7 +52,7 @@ export function GetContries(porps: { Country: Country[] }) {
                             {/* <Button variant="light" style={{ padding: 0 }} onClick={() => toggleFinance(!showFinance)}><TbZoomMoney style={{fontSize: "22px"}} /> ({ctry.Financing.length})</Button> */}
                         </td>
                         <ModalCustom
-                            Title="Exchange Rate"
+                            Title="Financing"
                             showModal={showFinance[ctry.CountryID]}
                             key={Math.random().toString()}
                             onDissmis={(show) => {
@@ -60,8 +60,7 @@ export function GetContries(porps: { Country: Country[] }) {
                                 toggleFinance(localHashCurrentExchange);
                             }}
                             // JsxEl={<TbZoomMoney style={{fontSize: "22px"}} />}
-                            body={() => {
-                                return <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
+                            body={ <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
                                     <thead>
                                         <tr>
                                             <th colSpan={2}>CoFinancing</th>
@@ -72,7 +71,7 @@ export function GetContries(porps: { Country: Country[] }) {
                                     </thead>
                                     <tbody>
                                         {ctry.Financing.map((f, ix) => {
-                                            return <tr key={ix}>
+                                            return <tr key={Math.random()}>
                                                 <td key={f.CoFinancing + ix} colSpan={2}> {f.CoFinancing} </td>
                                                 <td key={f.GCF + ix} colSpan={2}>{f.GCF.toLocaleString("en-us", { style: "currency", currency: f.Currency })}</td>
                                                 <td key={f.Total + ix} colSpan={2}>{f.Total.toLocaleString("en-us", { style: "currency", currency: f.Currency })}</td>
@@ -80,19 +79,8 @@ export function GetContries(porps: { Country: Country[] }) {
                                         })}
                                     </tbody>
                                 </ Table>
-                            }
                             } />
                     </tr>
-                    {/* <tr hidden={!showFinance}>
-                        {ctry.Financing.map(f => {
-                            return <td colSpan={7}>
-                                <p><strong>CoFinancing:</strong>: {f.CoFinancing} <strong>GCF:</strong>:{f.GCF.toLocaleString("en-us", { style: "currency", currency: f.Currency })} <strong>Total:</strong>{f.Total.toLocaleString("en-us", { style: "currency", currency: f.Currency })}</p>
-                            </td>
-                        })}
-                    </tr> */}
-                    {/* <div> */}
-
-                    {/* </div> */}
                 </React.Fragment>
             )}
         </tbody>
@@ -105,16 +93,16 @@ export function GetDisbursements(props: { Disbursement: Disbursement[] }) {
     const localHashCurrentExchange: hasHTable = {};
 
     if (props.Disbursement && props.Disbursement.length > 0) {
-        return <Table key={"Disbursement#"} size="lg" style={{ maxWidth: "80%", margin: "auto" }}>
+        return <Table key={"Disbursement#"} size="lg" style={{ maxWidth: "90%", margin: "auto" }}>
             <thead>
                 <tr style={{ background: "#add8e640" }}>
-                    <th style={{ fontWeight: 500 }}>ProjectDisbursementID</th>
-                    <th style={{ fontWeight: 500 }}>AmountDisbursed</th>
-                    <th style={{ fontWeight: 500 }}>DateEffective</th>
+                    <th style={{ fontWeight: 500 }}>Disbursement's ID</th>
+                    <th style={{ fontWeight: 500 }}>Amount Disbursed</th>
+                    <th style={{ fontWeight: 500 }}>Date Effective</th>
                     <th style={{ fontWeight: 500 }}>Entity</th>
                     {/* <th style={{ fontWeight: 500 }}>Currency</th> */}
                     {/* <th style={{ fontWeight: 500 }}>AmountDisbursed</th> */}
-                    <th style={{ fontWeight: 500 }}>ExchangeRate</th>
+                    <th style={{ fontWeight: 500 }}>Current exchange rate</th>
                 </tr>
             </thead>
             <tbody>
@@ -147,15 +135,14 @@ export function GetDisbursements(props: { Disbursement: Disbursement[] }) {
                                 }}><TbZoomMoney style={{ fontSize: "22px" }} /></Button>
                             </td>
                             <ModalCustom
-                                Title="Exchange Rate"
+                                Title="Current exchange rate"
                                 showModal={showCurrentExchangeRate[dis.ProjectDisbursementID]}
                                 onDissmis={(show) => {
                                     localHashCurrentExchange[dis.ProjectDisbursementID] = show;
                                     toggleCurrentExchangeRate(localHashCurrentExchange);
                                 }}
                                 // JsxEl={<TbZoomMoney style={{fontSize: "22px"}} />}
-                                body={() => {
-                                    return <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
+                                body={ <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
                                         <thead>
                                             <tr>
                                                 <th colSpan={2}>CurrencyCode</th>
@@ -173,17 +160,8 @@ export function GetDisbursements(props: { Disbursement: Disbursement[] }) {
                                             </tr>
                                         </tbody>
                                     </ Table>
-                                }
                                 } />
                         </tr>
-                        {/* <tr hidden={!showCurrentExchangeRate[dis.ProjectDisbursementID]}>
-                            <td colSpan={6}>
-                                {dis.CurrentExchangeRate.CurrencyCode}
-                                {dis.CurrentExchangeRate.EffectiveDate}
-                                {dis.CurrentExchangeRate.ExchangeRate}
-                                {dis.CurrentExchangeRate.Source}
-                            </td>
-                        </tr> */}
                     </React.Fragment>
                 )}
             </tbody>
@@ -198,17 +176,17 @@ export function GetEntities(props: { Entity: Entity[] }) {
     const localHashCurrentExchange: hasHTable = {};
 
     if (props.Entity && props.Entity.length > 0) {
-        return <Table key={"Entity#"} size="lg" style={{ maxWidth: "80%", margin: "auto" }}>
+        return <Table key={"Entity#"} size="lg" style={{ maxWidth: "90%", margin: "auto" }}>
             <thead>
                 <tr style={{ background: "#add8e640" }}>
-                    <th style={{ fontWeight: 500 }}>EntityID</th>
+                    <th style={{ fontWeight: 500 }}>Entity's ID</th>
                     <th style={{ fontWeight: 500 }}>Name</th>
                     <th style={{ fontWeight: 500 }}>Access</th>
                     <th style={{ fontWeight: 500 }}>Acronym</th>
                     <th style={{ fontWeight: 500 }}>ESS</th>
                     <th style={{ fontWeight: 500 }}>Sector</th>
                     <th style={{ fontWeight: 500 }}>Type</th>
-                    <th style={{ fontWeight: 500 }}>ExchangeRate</th>
+                    <th style={{ fontWeight: 500 }}>Fiduciary standards</th>
                 </tr>
             </thead>
             <tbody>
@@ -244,14 +222,13 @@ export function GetEntities(props: { Entity: Entity[] }) {
                                 }}><TbZoomMoney style={{ fontSize: "22px" }} /></Button>
                             </td>
                             <ModalCustom
-                                Title="Exchange Rate"
+                                Title="Fiduciary standards"
                                 showModal={showEntityCurrentExchangeRate[dis.EntityID]}
                                 onDissmis={(show) => {
                                     localHashCurrentExchange[dis.EntityID] = show;
                                     toggleEntity(localHashCurrentExchange);
                                 }}
-                                body={() => {
-                                    return <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
+                                body={ <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
                                         <thead>
                                             <tr>
                                                 <th colSpan={2}>FiduciaryStandard</th>
@@ -259,25 +236,16 @@ export function GetEntities(props: { Entity: Entity[] }) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dis.FiduciaryStandards.map(f => {
-                                                return <tr>
+                                            {dis.FiduciaryStandards.map((f,ix) => {
+                                                return <tr key={ix}>
                                                     <td colSpan={2}>{f.FiduciaryStandard}</td>
                                                     <td colSpan={2}>{f.Size}</td>
                                                 </tr>
                                             })}
                                         </tbody>
                                     </ Table>
-                                }
                                 } />
                         </tr>
-                        {/* {dis.FiduciaryStandards.map(f => {
-                            return <tr hidden={!showEntityCurrentExchangeRate[dis.EntityID]}>
-                                <td colSpan={7}>
-                                    <span><strong>FiduciaryStandard:</strong>: {f.FiduciaryStandard} <strong>Size:</strong>: {f.Size}</span>
-                                </td>
-                            </tr>
-                        })} */}
-
                     </React.Fragment>
                 )}
             </tbody>
@@ -292,18 +260,18 @@ export function GetFunding(props: { Funding: Funding[] }) {
     const localHashCurrentExchange: hasHTable = {};
 
     if (props.Funding && props.Funding.length > 0) {
-        return <Table style={{ maxWidth: "80%", margin: "auto" }}>
+        return <Table style={{ maxWidth: "90%", margin: "auto" }}>
             <thead>
                 <tr style={{ background: "#add8e640" }}>
-                    <th style={{ fontWeight: 500 }}>ProjectBudgetID</th>
+                    <th style={{ fontWeight: 500 }}>Budget's ID</th>
                     <th style={{ fontWeight: 500 }}>BM</th>
                     <th style={{ fontWeight: 500 }}>Budget</th>
                     {/* <th style={{ fontWeight: 500 }}>BudgetUSDeq</th> */}
                     {/* <th style={{ fontWeight: 500 }}>Currency</th> */}
                     <th style={{ fontWeight: 500 }}>Instrument</th>
                     <th style={{ fontWeight: 500 }}>Source</th>
-                    <th style={{ fontWeight: 500 }}>SourceID</th>
-                    <th style={{ fontWeight: 500 }}>ExchangeRate</th>
+                    <th style={{ fontWeight: 500 }}>Source's ID</th>
+                    <th style={{ fontWeight: 500 }}>Current exchange rate</th>
                 </tr>
             </thead>
             <tbody>
@@ -344,15 +312,15 @@ export function GetFunding(props: { Funding: Funding[] }) {
                                 </Button>
                             </td>
                             <ModalCustom
-                                Title="Exchange Rate"
+                                Title="Current ExchangeRate"
                                 showModal={showFunding[dis.ProjectBudgetID]}
                                 onDissmis={(show) => {
                                     localHashCurrentExchange[dis.ProjectBudgetID] = show;
                                     toggleFunding(localHashCurrentExchange);
                                 }}
                                 // JsxEl={<TbZoomMoney style={{fontSize: "22px"}} />}
-                                body={() => {
-                                    return <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
+                                body={
+                                     <Table striped style={{ maxWidth: "80%", margin: "auto" }}>
                                         <thead>
                                             <tr>
                                                 <th colSpan={2}>CurrencyCode</th>
@@ -370,22 +338,8 @@ export function GetFunding(props: { Funding: Funding[] }) {
                                             </tr>
                                         </tbody>
                                     </ Table>
-                                }
                                 } />
                         </tr>
-
-                        {/* <tr hidden={!showFunding[dis.ProjectBudgetID]}>
-                            <td colSpan={2}>CurrencyCode</td>
-                            <td colSpan={2}>EffectiveDate</td>
-                            <td colSpan={1}>ExchangeRate</td>
-                            <td colSpan={2}>Source</td>
-                        </tr>
-                        <tr hidden={!showFunding[dis.ProjectBudgetID]}>
-                            <td colSpan={2}>{dis.CurrentExchangeRate.CurrencyCode}</td>
-                            <td colSpan={2}>{dis.CurrentExchangeRate.EffectiveDate}</td>
-                            <td colSpan={1}>{dis.CurrentExchangeRate.ExchangeRate}</td>
-                            <td colSpan={2}>{dis.CurrentExchangeRate.Source}</td>
-                        </tr> */}
                     </React.Fragment>
                 )}
             </tbody>
@@ -398,7 +352,7 @@ export function GetFunding(props: { Funding: Funding[] }) {
 
 export function GetResultAreas(props: { ResultAreas: ResultArea[] }) {
     if (props.ResultAreas && props.ResultAreas.length > 0) {
-        return <Table key={"ResultAreas#"} style={{ maxWidth: "80%", margin: "auto" }}>
+        return <Table key={"ResultAreas#"} style={{ maxWidth: "90%", margin: "auto" }}>
             <thead>
                 <tr style={{ background: "#add8e640" }}>
                     <th style={{ fontWeight: 500 }}>Area</th>
@@ -429,7 +383,7 @@ export function GetResultAreas(props: { ResultAreas: ResultArea[] }) {
 }
 
 
-export function ModalCustom(props: { Title: string, body: () => JSX.Element, showModal: boolean, onDissmis: (statedShow: boolean) => void }) {
+export function ModalCustom(props: { Title: string, body: JSX.Element, showModal: boolean, onDissmis: (statedShow: boolean) => void }) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -443,7 +397,7 @@ export function ModalCustom(props: { Title: string, body: () => JSX.Element, sho
                 <Modal.Header closeButton>
                     <Modal.Title>{props.Title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{props.body()}</Modal.Body>
+                <Modal.Body>{props.body}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => { handleClose(); props.onDissmis(!show); }}>
                         Close
